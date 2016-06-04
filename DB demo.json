@@ -4,7 +4,7 @@
 	"id":				"1",
 	"fullName":			"Gregory Kondratenko",
 	"age":				"30",
-	"traningRoutine":	[{
+	"trainingRoutine":	[{
 							"exType":"power",
 							"dayOfWeek":"monday",
 							"hour":"0800";

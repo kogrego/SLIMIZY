@@ -5,7 +5,12 @@ var mongoose = require('mongoose'),
 var schema_name = new schema({
 	id: String,
 	username: String,
-	password: String,
+	password: {type: String, stringTransform: function(string) {
+    if(!passwordHash.isHashed(string)) {
+      string = passwordHash.generate(string);
+    }
+    return string;
+  }}
 }, {collection: 'UserLogin'});
 
 userLoginSchema = mongoose.model('userLoginSchema', schema_name);

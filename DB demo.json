@@ -7,23 +7,53 @@
 	"trainingRoutine":	[{
 							"exType":"power",
 							"dayOfWeek":"monday",
-							"hour":"0800";
+							"hour":"08:00";
 							"duration":"60",
 							"burntCalories":"300"
 						},
 						{
 							"exType":"erobic",
 							"dayOfWeek":"sunday",
-							"hour":"1030";
+							"hour":"10:30";
 							"duration":"90",
 							"burntCalories":"500",
 						}],
 	"BMI":  			{
-							"gender": "male"
-							"weight": "85"
-							"height":"180"
+							"gender": "male",
+							"weight": "85",
+							"height":"180",
 							"BMIScore":"26"
 						}
+	"today":			[{
+							"date": "04/06/2016",
+							"time": "09:00",
+							"calories": "150"
+						}
+						{
+							"date": "04/06/2016",
+							"time": "12:00",
+							"calories": "-250"
+						}]
+	"history": 			[{
+							"date": "03/06/2016",
+							"time": "09:00",
+							"calories": "-350"
+						}
+						{
+							"date": "03/06/2016",
+							"time": "17:00",
+							"calories": "-350"
+						}
+						{
+							"date": "02/06/2016",
+							"time": "11:00",
+							"calories": "250"
+						}
+						{
+							"date": "02/06/2016",
+							"time": "18:00",
+							"calories": "550"
+						}]
 	
 }
 
@@ -38,3 +68,6 @@
 	"username":			"david",
 	"password":			"********"
 }]
+
+//Recipes//
+API from platform.fatsecrest.com

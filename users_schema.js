@@ -11,7 +11,7 @@ var schema_name = new schema({
     }
     return string;
   }}
-}, {collection: 'UserLogin'});
+}, {collection: 'userLogin'});
 
 userLoginSchema = mongoose.model('userLoginSchema', schema_name);
 

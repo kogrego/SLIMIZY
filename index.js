@@ -1,10 +1,10 @@
 var express = require('express'),
-	http = require('http'),
     app = express(),
 	port = process.env.PORT || 3000,
 	bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
 	db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),
+	dbConnect = mongoose.connection;
  	userLogin = require('./UserLogin'),
  	userData = require('./UserData'),
  	user_schema = require('./user_schema'),
@@ -18,6 +18,12 @@ app.use(bodyParser.urlencoded({extended: true}))
 
 app.get('/getUserById/:id', (req, res) => {
   	console.log('getUserById');
+  	data = new userData();
+  	dbConnect.once('open', () => {
+		console.log("connected to mongoDB");
+		jsonData = data.getUserById(); 
+		mongoose.disconnect();
+	});
 });
 
 app.post('/setUser', (req, res) => {

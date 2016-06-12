@@ -19,9 +19,11 @@ app.use(bodyParser.urlencoded({extended: true}))
 app.get('/getUserById/:id', (req, res) => {
   	console.log('getUserById');
   	data = new userData();
+  	dbConnect.on('error', console.error.bind(console, 'connection error:'));
+  	console.log("no DB error");
   	dbConnect.once('open', () => {
 		console.log("connected to mongoDB");
-		jsonData = data.getUserById(); 
+		jsonData = data.getUserById(req.params.id); 
 		mongoose.disconnect();
 	});
 });
@@ -46,6 +48,6 @@ app.delete('/deleteUser/:id', (req, res) => {
   	console.log('deleteUser');
 });
 
- app.listen(port, () => {
+app.listen(port, () => {
  	console.log('listening on port: ' + port);
  });

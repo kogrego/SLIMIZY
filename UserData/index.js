@@ -10,9 +10,11 @@ class userData extends EventEmitter {
 		super();
 		this.json = null;
 		this.on(eventsConfig.GETUSERBYID, (id) => {
+			console.log('on getById: ' + id);
 			var tempJson = null;
 			user_schema.find({}).where('id').equals(id).exec((err, data) => {
 				if (err) throw err;
+				console.log('user JSON:\n' + data);
 				tempJson = data;
 			});
 			this.json = tempJson;

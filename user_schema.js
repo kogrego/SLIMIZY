@@ -1,35 +1,39 @@
 var mongoose = require('mongoose'),
 	schema = mongoose.Schema,
-	userDataSchema;
+	userDataSchema,
+	trainingRoutine,
+	BMI,
+	dailyGraph,
+	userData;
 
-var trainingRoutine_schema = new schema({
+trainingRoutine = new schema({
 	exType: String,
 	dayOfWeek: String,
-	beginTime: Date,
+	hour: String,
 	duration: Number,
 	burntCalories: Number
 });
 
-var BMI_schema = new schema({
+BMI = new schema({
 	gender: String,
 	weight: Number,
 	height: Number,
 	BMIScore: Number
 });
 
-var dailyGraph_schema = new schema({
-	date: Date,
-	time: Date,
+dailyGraph = new schema({
+	date: String,
+	time: String,
 	calories: Number
 });
 
-var userData = new schema({
+userData = new schema({
 	id: String,
 	fullName: String,
 	age: Number,
-	trainingRoutine: [trainingRoutine_schema],
-	BMI: BMI_schema,
-	dailyGraph: [dailyGraph_schema]
+	trainingRoutine: [trainingRoutine],
+	BMI: BMI,
+	dailyGraph: [dailyGraph]
 }, {collection: 'userData'});
 
 userDataSchema = mongoose.model('userDataSchema', userData);

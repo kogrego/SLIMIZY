@@ -7,12 +7,26 @@ var express = require('express'),
 	dbConnect = mongoose.connection,
  	userLogin = require('./UserLogin'),
  	userData = require('./UserData'),
- 	user_schema = require('./user_schema'),
+ 	foods = require('./Foods'),
+ 	userDataSchema = require('./user_schema'),
  	users_schema = require('./users_schema'),
  	jsonData = null,
  	login = null,
- 	data = null;
+ 	UserData = null,
+ 	Foods = null;
 
+dbConnect.once('open', () => {
+	console.log("connected to mongoDB");
+    userDataSchema.find({} ,(err, data) => {
+		if (err){
+			console.log(err);
+			return console.log(err);
+		} 
+		UserData = new userData(data);
+		console.log('userData created');
+		mongoose.disconnect();
+	});
+});
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -20,23 +34,17 @@ app.get('/', (req, res) => {
 	res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/getUserById/:id', (req, res) => {
+app.get('/user/:id', (req, res) => {
   	console.log('getUserById');
-  	data = new userData();
   	dbConnect.on('error', console.error.bind(console, 'connection error:'));
-  	console.log("no DB error");
-    console.log("connected to mongoDB");
-    jsonData = data.getUserById(req.params.id); 
-    mongoose.disconnect();
-  	//dbConnect.once('open', () => {
-		//console.log("connected to mongoDB");
-        //jsonData = data.getUserById(req.params.id); 
-		//mongoose.disconnect();
-	//});
+    jsonData = UserData.getUserById(req.params.id); 
+	res.status(200).json(jsonData);
 });
 
-app.post('/setUser', (req, res) => {
-  	console.log('setUser');
+app.get('/recipes/:calories/:searchTerm', (req, res) =>{
+	// Foods = new foods();
+	// jsonData = Foods.getFoodsByCalories(req.params,searchTerm, req.params.calories);
+	// res.status(200).json(jsonData);
 });
 
 app.post('/login', (req, res) => {
@@ -47,11 +55,11 @@ app.post('/register', (req, res) => {
 	console.log('register');
 });
 
-app.put('/updateUser/:id', (req, res) => {
+app.put('/user/:id', (req, res) => {
   	console.log('updateUser'); 
 });
 
-app.delete('/deleteUser/:id', (req, res) => {
+app.delete('/user/:id', (req, res) => {
   	console.log('deleteUser');
 });
 

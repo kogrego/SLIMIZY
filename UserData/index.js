@@ -2,21 +2,22 @@
 
 var EventEmitter = require('events').EventEmitter,
     express = require('express'),
-    user_schema = require('../user_schema'),
     eventsConfig = require('./config').events;
 
 class userData extends EventEmitter {
-	constructor(){
+	constructor(data){
 		super();
+		this.data = data;
 		this.json = null;
+		
 		this.on(eventsConfig.GETUSERBYID, (id) => {
 			console.log('on getById: ' + id);
 			var tempJson = null;
-			user_schema.find({}).where('id').equals(id).exec((err, data) => {
-				if (err) throw err;
-				console.log('user JSON:\n' + data);
-				tempJson = data;
-			});
+			this.data.forEach((entry) => {
+                if(entry.id == id){
+                    tempJson = entry;
+                }
+            });
 			this.json = tempJson;
 		});
 	}

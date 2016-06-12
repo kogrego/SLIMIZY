@@ -27,9 +27,9 @@ var userData = new schema({
 	id: Number,
 	fullName: String,
 	age: Number,
-	trainingRoutine: [trainingRoutine_schema],
-	BMI: BMI_schema,
-	dailyGraph: [dailyGraph_schema]
+	// trainingRoutine: [trainingRoutine_schema],
+	// BMI: BMI_schema,
+	// dailyGraph: [dailyGraph_schema]
 }, {collection: 'userData'});
 
 userDataSchema = mongoose.model('userDataSchema', userData);

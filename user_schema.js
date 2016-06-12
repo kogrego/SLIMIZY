@@ -8,7 +8,7 @@ var trainingRoutine_schema = new schema({
 	beginTime: Date,
 	duration: Number,
 	burntCalories: Number
-});
+},{collection: 'trainingRoutine'});
 
 var BMI_schema = new schema({
 	gender: String,
@@ -21,10 +21,10 @@ var dailyGraph_schema = new schema({
 	date: Date,
 	time: Date,
 	calories: Number
-});
+}, {collection: 'today'});
 
 var userData = new schema({
-	id: Number,
+	id: String,
 	fullName: String,
 	age: Number,
 	// trainingRoutine: [trainingRoutine_schema],

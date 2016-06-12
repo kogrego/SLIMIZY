@@ -21,11 +21,14 @@ app.get('/getUserById/:id', (req, res) => {
   	data = new userData();
   	dbConnect.on('error', console.error.bind(console, 'connection error:'));
   	console.log("no DB error");
-  	dbConnect.once('open', () => {
-		console.log("connected to mongoDB");
-		jsonData = data.getUserById(req.params.id); 
-		mongoose.disconnect();
-	});
+    console.log("connected to mongoDB");
+    jsonData = data.getUserById(req.params.id); 
+    mongoose.disconnect();
+  	//dbConnect.once('open', () => {
+		//console.log("connected to mongoDB");
+        //jsonData = data.getUserById(req.params.id); 
+		//mongoose.disconnect();
+	//});
 });
 
 app.post('/setUser', (req, res) => {

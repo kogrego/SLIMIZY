@@ -12,19 +12,27 @@ class userData extends EventEmitter {
 		
 		this.on(eventsConfig.GETUSERBYID, (id) => {
 			console.log('on getById: ' + id);
-			var tempJson = null;
-			this.data.forEach((entry) => {
-                if(entry.id == id){
-                    tempJson = entry;
-                }
-            });
-			this.json = tempJson;
+			this.json = data;
+		});
+
+		this.on(eventsConfig.UPDATEUSERBMI, (BMI) => {
+			console.log('on updateBMI:\n' + BMI);
+			if (BMI.gender != null) data.BMI.gender = BMI.gender;
+			if (BMI.gender != null) data.BMI.weight = BMI.weight;
+			if (BMI.gender != null) data.BMI.height = BMI.height;
+			if (BMI.gender != null) data.BMI.BMIScore = BMI.BMIScore;
+			this.json = data;
 		});
 	}
 
 	getUserById(id) {
-       this.emit(eventsConfig.GETUSERBYID, id);
-       return this.json;
+       	this.emit(eventsConfig.GETUSERBYID, id);
+       	return this.json;
+    }
+
+    updateUserBMI(BMI){
+    	this.emit(eventsConfig.UPDATEUSERBMI, BMI);
+    	return this.json;
     }
 }
 module.exports = userData;

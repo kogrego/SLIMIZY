@@ -2,6 +2,7 @@
 
 module.exports = {
     events: {
-        GETUSERBYID: 'getUserById'
+        GETUSERBYID: 'getUserById',
+        UPDATEUSERBMI: 'updateUserBMI'
     }
 };

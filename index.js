@@ -17,15 +17,6 @@ var express = require('express'),
 
 dbConnect.once('open', () => {
 	console.log("connected to mongoDB");
-    userDataSchema.find({} ,(err, data) => {
-		if (err){
-			console.log(err);
-			return console.log(err);
-		} 
-		UserData = new userData(data);
-		console.log('userData created');
-		mongoose.disconnect();
-	});
 });
 
 app.use(bodyParser.urlencoded({extended: true}));
@@ -36,9 +27,14 @@ app.get('/', (req, res) => {
 
 app.get('/user/:id', (req, res) => {
   	console.log('getUserById');
-  	dbConnect.on('error', console.error.bind(console, 'connection error:'));
-    jsonData = UserData.getUserById(req.params.id); 
-	res.status(200).json(jsonData);
+  	var query = userDataSchema.find({}).where('id').equals(req.params.id);
+  	query.exec((err, data) => {
+		if (err) res.send(err);
+		UserData = new userData(data);
+		console.log('userData created');
+		jsonData = UserData.getUserById(req.params.id); 
+		res.status(200).json(jsonData);
+	});
 });
 
 app.get('/recipes/:calories/:searchTerm', (req, res) =>{
@@ -55,13 +51,40 @@ app.post('/register', (req, res) => {
 	console.log('register');
 });
 
-app.put('/user/:id', (req, res) => {
+app.put('/user/BMI/:id', (req, res) => {
+  	console.log('updateUser');
+  	var query = userDataSchema.find({}).where('id').equals(req.params.id);
+  	query.exec((err, data) => {
+		if (err) res.send(err);
+		UserData = new userData(data);
+		console.log('userData created');
+		var BMI = {
+			gender: req.body.gender,
+			weight: req.body.weight,
+			height: req.body.height,
+			BMIScore: req.body.BMIScore
+		}
+		jsonData = UserData.updateUserBMI(BMI);
+		// jsonData.save((err) => {
+		// 	if (err) res.send(err);
+		// 	res.status(200).json(jsonData);
+		// }); 
+	}); 
+});
+
+app.put('/user/trainingRoutine/:id', (req, res) => {
+  	console.log('updateUser'); 
+});
+
+app.put('/user/dailyGraph/:id', (req, res) => {
   	console.log('updateUser'); 
 });
 
 app.delete('/user/:id', (req, res) => {
   	console.log('deleteUser');
-});
+  	var query = userDataSchema.find({}).where('id').equals(req.params.id).remove();
+  	query.exec();
+});	
 
 app.listen(port, () => {
  	console.log('listening on port: ' + port);

@@ -16,6 +16,10 @@ var express = require('express'),
 
 app.use(bodyParser.urlencoded({extended: true}));
 
+app.get('/', (req, res) => {
+	res.sendFile(__dirname + '/index.html');
+});
+
 app.get('/getUserById/:id', (req, res) => {
   	console.log('getUserById');
   	data = new userData();

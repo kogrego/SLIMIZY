@@ -1,6 +1,4 @@
-var mongoose = require('mongoose'),
-	schema = mongoose.Schema,
-	userLogin;
+var mongoose = require('mongoose');
 
 var userSchema = new mongoose.Schema({
 	id: String,
@@ -13,6 +11,6 @@ var userSchema = new mongoose.Schema({
   }}
 }, {collection: 'userLogin'});
 
-userLogin = mongoose.model('userLogin', userSchema);
-
-module.exports = userLogin;
+var user = mongoose.model('userLogin', userSchema);
+console.log('db Connected!');
+module.exports = user;

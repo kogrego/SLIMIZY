@@ -1,113 +1,63 @@
-/*var express = require('express');
-var router = express.Router();
-var user = require('../user_schema');
-var jsonData = null;
+//DB schema:
+var user = require('../users_schema');
+var userData = require('../user_schema');
 
-router.get('/', (req, res, next) => {
-    res.render(__dirname + '/index.html');
-});
+//MDL function:
 
-router.post('/login',(req,res) => {
-  var _id = req.body.id;
-  var _username = req.body.username;
-  var _password = req.body.password;
+exports.loginAuth = function (req,res){
+    var _id = req.body.id;
+    var _username = req.body.username;
+    var _password = req.body.password;
 
-  user.findOne({id:_id, username: _username , password: _password}, function(err, user){
-    if (err){
-        console.log(err);
-        return res.status(500).send();
-    }
-    if (!user){ 
-        console.log('user not found');
-        return res.status(404).send();
-    }
-    console.log('user:' + _username + 'found!');
-    jsonData = UserData.getUserById(req.params.id); 
-    return res.status(200).json(jsonData);
-  })  
-});*/
-
-
-
-
-/*var config = require('config.json'),
-    express = require('express'),
-    bodyParser = 
-    db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy');
-    db.bind('users');
-
-var EventEmitter = require('events').EventEmitter;
-    
-    //eventsConfig = require('./config').events;
-
-class userLogin extends EventEmitter {
-    constructor(data){
-        super();
-        this.data = data;
-        this.json = null;
-        
-        this.on(eventsConfig.GETBYID, (id) => {
-            console.log('on getById: ' + id);
-            var tempJson = null;
-            this.data.forEach((entry) => {
-                if(entry.id == id){
-                    tempJson = entry;
-                }
-            });
-            this.json = tempJson;
-        });
-    }
-
-//     function getById(_id) {
-//         var deferred = Q.defer();
-
-//         db.users.findById(_id, function (err, user) {
-//             if (err) deferred.reject(err);
-
-//             if (user) {
-//                 // return user (without hashed password)
-//                 deferred.resolve(lodash.omit(user, 'hash'));
-//             } else {
-//                 // user not found
-//                 deferred.resolve();
-//             }
-//         });
-
-//         return deferred.promise;
-//     }
-
-    getUserById(id) {
-       this.emit(eventsConfig.GETBYID, id);
-       return this.json;
-    }
-//     function authenticate(username, password) {
-//     var deferred = Q.defer();
-
-//     db.users.findOne({ username: username }, function (err, user) {
-//         if (err) deferred.reject(err);
-
-//         if (user && bcrypt.compareSync(password, user.hash)) {
-//             // authentication successful
-//             deferred.resolve(jwt.sign({ sub: user._id }, config.secret));
-//         } else {
-//             // authentication failed
-//             deferred.resolve();
-//         }
-//     });
-
-//     return deferred.promise;
-// }
-
-
-
-
+    user.findOne({id:_id, username: _username , password: _password}, function(err, user){
+        if (err){
+            console.log(err);
+            return res.status(500).send();
+        }
+        if (!user){ 
+            console.log('user not found');
+            return res.status(404).send();
+        }
+        console.log('user:' + _username + 'found!');
+        var jsonData = userData.getUserById(_id); 
+        return res.send(jsonData);
+    })  
 }
-module.exports = userLogin;
-
-
-*/
-
-
-
-
-
+exports.cal4today = function(req, res){
+    var today = req.params.today;
+    userData.dailyGraph.find({date:today},function(err, obj){
+            if (err) throw err;
+            console.log('hi');
+            res.send(obj);
+         });
+};
+exports.showAllHistory = function(req, res){
+    user.find({},function(err, obj){
+            if (err) throw err;
+            res.send(obj);
+            //mongoose.disconnect();
+         });
+};
+exports.showBMI = function(req, res){
+    userData.find({}).where('id').equals('1').exec(function(err, obj){
+            if (err) throw err;
+            res.send(obj);
+            console.log("test");
+            //mongoose.disconnect();
+         });
+};
+exports.userProfile = function(req, res){
+    console.log("test"); 
+    user.find({}).exec(function (err, obj){
+        if(err) throw err;
+        if (!obj){
+            console.log("BYE");
+            res.set('Content-Type', 'text/html');
+            res.send('<html><body><h1>showing result for user id: <b>' + req.params.usrID + 
+                     '</b></br>USER ID not found , Please try a different one!</h1></body></html>');
+        }
+        else
+            res.send(obj);
+        //mongoose.disconnect();
+    });
+};

@@ -5,7 +5,7 @@ var express = require('express'),
     mongoose = require('mongoose'),
 	db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),			
 	dbConnect = mongoose.connection,
- 	//userLogin = require('./UserLogin'),
+ 	userLogin = require('./UserLogin'),
     //router = express.Router();
  	userData = require('./UserData'),
  	foods = require('./Foods'),
@@ -15,6 +15,7 @@ var express = require('express'),
  	login = null,
  	UserData = null,
  	Foods = null;
+    selectedUSR = null;
 
 dbConnect.once('open', () => {
 	console.log("connected to mongoDB");
@@ -48,26 +49,25 @@ app.get('/recipes/:calories/:searchTerm', (req, res) =>{
 	// res.status(200).json(jsonData);
 });
 
-app.post('/login',(req,res) => {
-  var _id = req.body.id;
-  var _username = req.body.username;
-  var _password = req.body.password;
-
-  user.findOne({id:_id, username: _username , password: _password}, function(err, user){
-    if (err){
-        console.log(err);
-        return res.status(500).send();
-    }
-    if (!user){ 
-        console.log('user not found');
-        return res.status(404).send();
-    }
-    console.log('user:' + _username + 'found!');
-    jsonData = UserData.getUserById(req.params.id); 
-    return res.status(200).json(jsonData);
-  })  
+app.post('/loginAuth',(req,res) => {
+    selectedUSR = userLogin.loginAuth(req, res);
 });
 
+app.get('/login/cal4today/:today',(req,res) => {
+    userLogin.cal4today(req, res);
+});
+
+app.get('/login/userProfile',(req,res) => {
+    userLogin.userProfile(req, res);
+});
+
+app.get('/showBMI',(req,res) => {
+    userLogin.showBMI(req, res);
+});
+
+app.get('/login/showAllHistory',(req,res) => {
+    userLogin.showAllHistory(req, res);
+});
 
 app.post('/register', (req, res) => {
 	console.log('register');

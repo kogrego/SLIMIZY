@@ -1,10 +1,10 @@
 var mongoose = require('mongoose'),
 	schema = mongoose.Schema,
-	userLoginSchema;
+	userLogin;
 
-var schema_name = new schema({
+var userSchema = new mongoose.Schema({
 	id: String,
-	username: String,
+	username: {type: String, unique:true},
 	password: {type: String, stringTransform: function(string) {
     if(!passwordHash.isHashed(string)) {
       string = passwordHash.generate(string);
@@ -13,6 +13,6 @@ var schema_name = new schema({
   }}
 }, {collection: 'userLogin'});
 
-userLoginSchema = mongoose.model('userLoginSchema', schema_name);
+userLogin = mongoose.model('userLogin', userSchema);
 
-module.exports = userLoginSchema;
+module.exports = userLogin;

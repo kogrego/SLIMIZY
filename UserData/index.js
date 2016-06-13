@@ -16,7 +16,7 @@ class userData extends EventEmitter {
 		});
 
 		this.on(eventsConfig.UPDATEUSERBMI, (BMI) => {
-			console.log('on updateBMI:\n' + BMI);
+			console.log('on updateBMI:\n' + BMI.gender + '\n' + BMI.height + '\n' + BMI.weight + '\n' + BMI.BMIScore + '\n');
 			if (BMI.gender != null) data.BMI.gender = BMI.gender;
 			if (BMI.gender != null) data.BMI.weight = BMI.weight;
 			if (BMI.gender != null) data.BMI.height = BMI.height;

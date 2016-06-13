@@ -53,22 +53,26 @@ app.post('/register', (req, res) => {
 
 app.put('/user/BMI/:id', (req, res) => {
   	console.log('updateUser');
+  	var gender = req.body.gender;
+  	var weight = req.body.weight;
+  	var height = req.body.height;
+  	var BMIScore = req.body.BMIScore;
   	var query = userDataSchema.find({}).where('id').equals(req.params.id);
   	query.exec((err, data) => {
 		if (err) res.send(err);
 		UserData = new userData(data);
-		console.log('userData created');
+		console.log('userData created' + data);
 		var BMI = {
-			gender: req.body.gender,
-			weight: req.body.weight,
-			height: req.body.height,
-			BMIScore: req.body.BMIScore
+			gender: gender,
+			weight: weight,
+			height: height,
+			BMIScore: BMIScore
 		}
 		jsonData = UserData.updateUserBMI(BMI);
-		// jsonData.save((err) => {
-		// 	if (err) res.send(err);
-		// 	res.status(200).json(jsonData);
-		// }); 
+		userDataSchema.update({},(err, id) => {
+			if (err) res.send(err);
+			res.status(200).json(data);
+		});
 	}); 
 });
 

@@ -1,0 +1,39 @@
+<!doctype html>
+<html ng-app="todoApp">
+    <head>
+        <title>My First Angular App</title>
+        <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+    </head>
+    <body ng-controller="ToDoCtrl">
+        <div class="page-header">
+            <h1>{{todo.user}}'s to do list</h1>
+            <span class= "label-success" ng-class="warningSuccess()" ng-hide="incompletCounter() == 0">{{incompletCounter()}}</span>
+        </div>
+        <div class="panel">
+            <div class="input-group">
+                <input class="form-control" ng-model="actionText" >
+                <span class="input-group-btn">
+                    <button class="btn btn-default" ng-click="addNewItem(actionText)">Add</button>
+                </span>
+            </div>
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Done</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in todo.items | filter: {done:false} | orderBy:'action'" >
+                        <td>{{item.action}}</td>
+                        <td><input type="checkbox" ng-model="item.done" ></td>
+                        <td>{{item.done}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <script src="js/lib/angular/angular.min.js"></script>
+        <script src="js/todo.js"></script>
+    </body>
+</html>

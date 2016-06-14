@@ -2,9 +2,9 @@ var express = require('express'),
     app = express(),
 	port = process.env.PORT || 3000,
 	bodyParser = require('body-parser'),
-    mongoose = require('mongoose'),
-	db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),			
-	dbConnect = mongoose.connection,
+    // mongoose = require('mongoose'),
+	// db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),			
+	// dbConnect = mongoose.connection,
  	userLogin = require('./UserLogin'),
     //router = express.Router();
  	userData = require('./UserData'),
@@ -15,20 +15,19 @@ var express = require('express'),
  	login = null,
  	UserData = null,
  	Foods = null;
-    selectedUSR = null;
 
-dbConnect.once('open', () => {
-	console.log("connected to mongoDB");
-    userDataSchema.find({} ,(err, data) => {
-		if (err){
-			console.log(err);
-			return console.log(err);
-		} 
-		UserData = new userData(data);
-		console.log('userData created');
-		mongoose.disconnect();
-	});
-});
+// dbConnect.once('open', () => {
+// 	console.log("connected to mongoDB");
+//     userDataSchema.find({} ,(err, data) => {
+// 		if (err){
+// 			console.log(err);
+// 			return console.log(err);
+// 		} 
+// 		UserData = new userData(data);
+// 		console.log('userData created');
+// 		mongoose.disconnect();
+// 	});
+// });
 
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -50,17 +49,17 @@ app.get('/recipes/:calories/:searchTerm', (req, res) =>{
 });
 
 app.post('/loginAuth',(req,res) => {
-    selectedUSR = userLogin.loginAuth(req, res);
+    userLogin.loginAuth(req, res);
 });
 
-app.get('/login/cal4today/:today',(req,res) => {
+app.get('/login/cal4today/:id/:d/:m/:y',(req,res) => {
     userLogin.cal4today(req, res);
 });
 
-<<<<<<< HEAD
-app.get('/login/userProfile',(req,res) => {
+app.get('/login/userProfile/:id',(req,res) => {
     userLogin.userProfile(req, res);
-=======
+});
+
 app.put('/user/BMI/:id', (req, res) => {
   	console.log('updateUser');
   	var gender = req.body.gender;
@@ -84,16 +83,8 @@ app.put('/user/BMI/:id', (req, res) => {
 			res.status(200).json(data);
 		});
 	}); 
->>>>>>> origin/master
 });
 
-app.get('/showBMI',(req,res) => {
-    userLogin.showBMI(req, res);
-});
-
-app.get('/login/showAllHistory',(req,res) => {
-    userLogin.showAllHistory(req, res);
-});
 
 app.post('/register', (req, res) => {
 	console.log('register');

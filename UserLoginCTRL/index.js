@@ -23,17 +23,18 @@ exports.loginAuth = function (req,res){
 }
 
 exports.cal4today = function(req, res){
-    var ttlCal = null,
+    var ttlCal = 'your daily calories consumption: ',
         _id = req.params.id, 
         _today = req.params.d +'/'+ req.params.m +'/'+ req.params.y;
-    user.find({"dailyGraph.date": _today, id: _id},function (err, obj){
+    user.find({id: _id},function (err, obj){
         if(err) throw err;
         if (obj==0){    
             res.set('Content-Type', 'text/html');
             res.send('<html><body><h1>USER ID: <b>' + req.params.id + 
                      ' not found , Please try a different one!</h1></body></html>');
         }
-        else{obj.forEach(function(element){
+        else{
+            obj.forEach(function(element){
                element.dailyGraph.forEach(function(val){
                 if (val.date == _today){
                     console.log(val);
@@ -41,8 +42,12 @@ exports.cal4today = function(req, res){
                 }     
             });
             //res.send(ttlCal);//try to use: JSON.parse(ttlCal) to show as JSON
-                      res.send('<html><body><h1>USER ID: <b>' + req.params.id + 
-                     ' not found , Please try a different one!</h1></body></html>');
+            res.set('Content-Type', 'text/html');
+            res.send('<html><body><h1>Hello ' + obj[0].fullName + 
+            '</h1><h3>your daily calories consumption:</h3>'+
+            '<h2>'+JSON.stringify(ttlCal)+
+            '</h2>'+
+            '</body></html>');
         });
         }
     })        

@@ -2,11 +2,11 @@ var express = require('express'),
     app = express(),
 	port = process.env.PORT || 3000,
 	bodyParser = require('body-parser'),
-    // mongoose = require('mongoose'),
-	// db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),			
-	// dbConnect = mongoose.connection,
+    mongoose = require('mongoose'),
+	db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),			
+	dbConnect = mongoose.connection,
  	userLogin = require('./UserLogin'),
-    //router = express.Router();
+    router = express.Router();
  	userData = require('./UserData'),
  	foods = require('./Foods'),
  	userDataSchema = require('./user_schema'),
@@ -29,9 +29,12 @@ var express = require('express'),
 // 	});
 // });
 
-app.use(bodyParser.urlencoded({extended: true}));
+//Use for POST/PUT
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true}));
 
-app.get('/', (req, res) => {
+//Routs & Callback functions:
+app.get('/', (req, res, next)=>{
 	res.sendFile(__dirname + '/index.html');
 });
 
@@ -60,12 +63,12 @@ app.get('/login/userProfile/:id',(req,res) => {
     userLogin.userProfile(req, res);
 });
 
-app.put('/user/BMI/:id', (req, res) => {
+app.get('/user/BMI/:id', (req, res) => {
   	console.log('updateUser');
-  	var gender = req.body.gender;
-  	var weight = req.body.weight;
-  	var height = req.body.height;
-  	var BMIScore = req.body.BMIScore;
+  	var gender = req.param.gender;
+  	var weight = req.param.weight;
+  	var height = req.param.height;
+  	var BMIScore = req.param.BMIScore;
   	var query = userDataSchema.find({}).where('id').equals(req.params.id);
   	query.exec((err, data) => {
 		if (err) res.send(err);

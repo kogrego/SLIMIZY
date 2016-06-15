@@ -5,10 +5,9 @@ var users = require('../users_schema'),
 //MDL function:
 
 exports.loginAuth = function (req,res){
-    var id = req.body.id,
-        username = req.body.username,
+    var username = req.body.username,
         password = req.body.password;
-    users.findOne({id:id, username: username}, function(err, user){
+    users.findOne({username: username, password:password}, function(err, user){
         if (err){
             console.log(err);
             return res.status(500).send();

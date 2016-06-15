@@ -72,12 +72,14 @@ exports.register = (req, res) => {
 
     var username = req.body.username,
         password = req.body.password,
-        fullName = req.body.fullName,
-        age = req.body.age,
-        weight = req.body.weight,
-        height = req.body.height,
-        BMIScore = req.body.BMIScore,
-        gender = req.body.gender;
+        firstName = req.body.firstName,
+        lastName = req.body.lastName,
+        fullName = firstName + " " + lastName;
+        // age = req.body.age,
+        // weight = req.body.weight,
+        // height = req.body.height,
+        // BMIScore = req.body.BMIScore,
+        // gender = req.body.gender;
     users.findOne({username: username}, (err, data) => {
         if(err) return res.status(500).send(err);
         if(data) res.status(400).json({status: "user already exists"});
@@ -98,14 +100,9 @@ exports.register = (req, res) => {
             var newUser = new user({
                 username: username,
                 fullName: fullName,
-                age: age,
+                age: 0,
                 trainingRoutine: [],
-                BMI: {
-                    gender: gender,
-                    weight: weight,
-                    height: height,
-                    BMIScore: BMIScore
-                },
+                BMI: {},
                 dailyGraph: []
             });
             newUser.save((err, doc) => {

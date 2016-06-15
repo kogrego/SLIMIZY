@@ -5,7 +5,8 @@ var users = require('../users_schema'),
 //MDL function:
 
 exports.loginAuth = function (req,res){
-    var username = req.body.username,
+    var id = req.body.id,
+        username = req.body.username,
         password = req.body.password;
     users.findOne({username: username, password:password}, function(err, user){
         if (err){
@@ -17,7 +18,7 @@ exports.loginAuth = function (req,res){
             return res.status(404).send();
         }
         console.log('user: ' + username + ' found! ' );
-        return res.send(user);
+        return res.redirect('/login/cal4today/'+id+'/04/06/2016');
     })  
 }
 
@@ -39,7 +40,9 @@ exports.cal4today = function(req, res){
                     ttlCal += val;
                 }     
             });
-            res.send(ttlCal);//try to use: JSON.parse(ttlCal) to show as JSON
+            //res.send(ttlCal);//try to use: JSON.parse(ttlCal) to show as JSON
+                      res.send('<html><body><h1>USER ID: <b>' + req.params.id + 
+                     ' not found , Please try a different one!</h1></body></html>');
         });
         }
     })        

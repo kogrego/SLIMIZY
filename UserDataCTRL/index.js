@@ -1,5 +1,5 @@
 
-var userDataSchema = require('./user_schema');
+var userDataSchema = require('../user_schema');
 
 exports.getUserById = (req, res) => {
 	var query = userDataSchema.findOne({id:req.params.id});

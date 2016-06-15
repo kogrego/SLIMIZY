@@ -1,6 +1,6 @@
-var registerMain = '<div class="form-container">'+
+var registerMain = '<div class="form-container" ng-controller="registerCTRL">'+
                     '<h2>Register</h2>'+
-                    '<form method="post">'+
+                    '<form method="post" action="/register">'+
                         '<div class="form-group">'+
                             '<label for="username">User ID</label>'+
                             '<input type="text" name="username" id="username" class="form-control" value="" required="">'+
@@ -23,7 +23,7 @@ var registerMain = '<div class="form-container">'+
                         '</div>'+
                         '<div class="form-group">'+
                             '<button type="submit" class="btn btn-primary">Register</button>'+
-                            '<a href="/login" class="btn btn-link">Cancel</a>'+
+                            '<a href="#" class="btn btn-link">Cancel</a>'+
                        ' </div>'+
                     '</form>'+
                 '</div>';
@@ -31,31 +31,25 @@ $('#register').click(function(){
     $('main').html(registerMain);  
 });
 
-var todoApp = angular.module('slizimyApp',[]);
+/**********Angular************
+
+//***controller***
+var slimizyApp = angular.module('slimizyApp',[]);
 var model = {
-    user:"David"
+    
 };
 
 slizimyApp.run(function($http){
-    $http.get("http://localhost:3000/ws_todo/getActionsData").success(function(data){
+    $http.get("http://localhost:3000/register").success(function(data){
         console.log(data);
         model.items = data;
     });
 });
-slizimyApp.controller('loginCtrl', function ($scope) {
-    $scope.todo= model;
-    $scope.incompletCounter = function(){
-        var count=0;
-        angular.forEach($scope.todo.items, function(item){
-            if(!item.done) {count++};
-        });
-        return count;
-    };
-    $scope.warningSuccess = function(){
-        return $scope.incompletCounter() < 3 ? "label-success" : "label-warning";
-    };  
+slizimyApp.controller('registerCTRL', function ($scope) {
+    $scope.todo = model;
     $scope.addNewItem = function(actionText){
-        $scope.todo.items.push({action: actionText, done: false});
+        $scope.todo.items.push({username: actionText, done: false});
 
     };
 });
+**********/

@@ -16,18 +16,18 @@ var express = require('express'),
  	UserData = null,
  	Foods = null;
 
-// dbConnect.once('open', () => {
-// 	console.log("connected to mongoDB");
-//     userDataSchema.find({} ,(err, data) => {
-// 		if (err){
-// 			console.log(err);
-// 			return console.log(err);
-// 		} 
-// 		UserData = new userData(data);
-// 		console.log('userData created');
-// 		mongoose.disconnect();
-// 	});
-// });
+dbConnect.once('open', () => {
+	console.log("connected to mongoDB");
+    userDataSchema.find({} ,(err, data) => {
+		if (err){
+			console.log(err);
+			return console.log(err);
+		} 
+		UserData = new userData(data);
+		console.log('userData created');
+		//    mongoose.disconnect();
+	});
+});
 
 //Use for POST/PUT
 app.use(bodyParser.json());

@@ -1,10 +1,7 @@
 //DB schema:
 var users = require('../users_schema'),  
     user = require('../user_schema');      
-    //jsonData = require('../UserData'),
-    //mongoose = require('mongoose'),
-    //db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),            
-    //dbConnect = mongoose.connection;
+
 //MDL function:
 
 exports.loginAuth = function (req,res){
@@ -26,7 +23,7 @@ exports.loginAuth = function (req,res){
 }
 
 exports.cal4today = function(req, res){
-    var fs = require('fs'),
+    var ttlCal = null,
         _id = req.params.id, 
         _today = req.params.d +'/'+ req.params.m +'/'+ req.params.y;
     user.find({"dailyGraph.date": _today, id: _id},function (err, obj){
@@ -36,10 +33,15 @@ exports.cal4today = function(req, res){
             res.send('<html><body><h1>USER ID: <b>' + req.params.id + 
                      ' not found , Please try a different one!</h1></body></html>');
         }
-        else{
-            var myArray = obj.filter(function(obj){
-                return console.log(obj.dailyGraph.date === _today);
+        else{obj.forEach(function(element){
+               element.dailyGraph.forEach(function(val){
+                if (val.date == _today){
+                    console.log(val);
+                    ttlCal += val;
+                }     
             });
+            res.send(ttlCal);//try to use: JSON.parse(ttlCal) to show as JSON
+        });
         }
     })        
 

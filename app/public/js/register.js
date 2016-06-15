@@ -22,6 +22,10 @@ var registerMain = '<div class="form-container" ng-controller="registerCTRL">'+
                             '<input type="password" name="password" id="password" class="form-control" required="">'+
                         '</div>'+
                         '<div class="form-group">'+
+                            '<label for="password">ReEnter Password</label>'+
+                            '<input type="password" name="rePassword" id="rePassword" class="form-control" required="">'+
+                        '</div>'+
+                        '<div class="form-group">'+
                             '<button type="submit" class="btn btn-primary">Register</button>'+
                             '<a href="#" class="btn btn-link">Cancel</a>'+
                        ' </div>'+

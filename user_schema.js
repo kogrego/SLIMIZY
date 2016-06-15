@@ -28,7 +28,7 @@ dailyGraph = new schema({
 });
 
 userData = new schema({
-	id: String,
+	username: String,
 	fullName: String,
 	age: Number,
 	trainingRoutine: [trainingRoutine],

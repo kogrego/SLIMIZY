@@ -6,12 +6,12 @@ var express = require('express'),
 	// db = mongoose.connect('mongodb://slimUser:slimPass@ds019950.mlab.com:19950/db_slimizy'),			
 	// dbConnect = mongoose.connection,
  	userLogin = require('./UserLoginCTRL'),
-    router = express.Router();
+    //router = express.Router();
  	userData = require('./UserDataCTRL'),
  	foods = require('./Foods'),
- 	jsonData = null,
- 	login = null,
- 	UserData = null,
+ 	// jsonData = null,
+ 	// login = null,
+ 	// UserData = null,
  	Foods = null;
 
 // dbConnect.once('open', () => {
@@ -39,31 +39,22 @@ app.use(function(req,res,next){
     next();
 });
 //Routs & Callback functions:
-// app.get('/', (req, res, next)=>{
-// 	res.sendFile(__dirname + '/index.html');
-// });
 
-app.get('/user/:id', userData.getUserById);
+app.get('/user/:username', userData.getUserByUsername);
 
-app.get('/recipes/:calories/:searchTerm', (req, res) =>{
-	// Foods = new foods();
-	// jsonData = Foods.getFoodsByCalories(req.params,searchTerm, req.params.calories);
-	// res.status(200).json(jsonData);
-});
+app.get('/recipes/:calories/:searchTerm', foods.getFoodsByCalories);
 
 app.post('/loginAuth', userLogin.loginAuth);
 
-app.get('/login/cal4today/:id/:d/:m/:y', userLogin.cal4today);
+app.get('/user/cal4today/:username/:d/:m/:y', userLogin.cal4today);
 
-app.get('/login/userProfile/:id', userLogin.userProfile);
+app.get('/user/userProfile/:username', userLogin.userProfile);
 
-app.put('/user/BMI/:id', userData.updateUserBMI);
+app.put('/user/BMI/:username', userData.updateUserBMI);
 
-app.post('/register', (req, res) => {
-	console.log('register');
-});
+app.post('/register', userLogin.register);
 
-app.delete('/user/:id', userData.deleteUser);
+app.delete('/user/:username', userData.deleteUser);
 
 app.listen(port, () => {
  	console.log('listening on port: ' + port);

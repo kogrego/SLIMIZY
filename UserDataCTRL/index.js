@@ -1,8 +1,8 @@
 
 var userDataSchema = require('../user_schema');
 
-exports.getUserById = (req, res) => {
-	var query = userDataSchema.findOne({id:req.params.id});
+exports.getUserByUsername = (req, res) => {
+	var query = userDataSchema.findOne({username:req.params.username});
   	query.exec((err, data) => {
 		if (err) res.send(err);
 		res.status(200).json(data);
@@ -17,7 +17,7 @@ exports.updateUserBMI = (req, res) => {
 			height: req.body.height,
 			BMIScore: req.body.BMIScore
 		};
-  	var query = userDataSchema.findOne({id:req.params.id});
+  	var query = userDataSchema.findOne({username:req.params.username});
   	query.exec((err, data) => {
 		if (err) res.send(err);
 		if (BMI.gender != null) data.BMI.gender = BMI.gender;
@@ -32,7 +32,7 @@ exports.updateUserBMI = (req, res) => {
 };
 
 exports.deleteUser = (req, res) => {
-	var query = userDataSchema.findOne({id:req.params.id}).remove();
+	var query = userDataSchema.findOne({username:req.params.username}).remove();
   	query.exec((err) => {
   		if (err) res.send(err);
 		else res.status(200).json({"result":"user deleted"});

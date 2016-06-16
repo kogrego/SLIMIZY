@@ -2,14 +2,6 @@ var registerMain = '<div class="form-container" ng-controller="registerCTRL">'+
                     '<h2>Register</h2>'+
                     '<form method="post" action="https://slimizy.herokuapp.com/register">'+
                     '<form method="post" action="http://localhost:3000/register">'+
-                        // '<div class="form-group">'+
-                        //     '<label for="username">User ID</label>'+
-                        //     '<input type="text" name="username" id="username" class="form-control" value="" required="">'+
-                        // '</div>'+
-                        '<div class="form-group">'+
-                            '<label for="username">User ID</label>'+
-                            '<input type="text" name="id" id="_id" class="form-control" value="" required="">'+
-                        '</div>'+
                         '<div class="form-group">'+
                             '<label for="firstName">First name</label>'+
                             '<input type="text" name="firstName" id="firstName" class="form-control" value="" required="">'+

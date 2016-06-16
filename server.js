@@ -46,9 +46,7 @@ app.get('/recipes/:calories/:searchTerm', foods.getFoodsByCalories);
 
 app.post('/loginAuth', userLogin.loginAuth);
 
-app.get('/user/cal4today/:username/:d/:m/:y', userLogin.cal4today);
-
-app.get('/user/userProfile/:username', userLogin.userProfile);
+app.get('/user/cal4today/:username/:d/:m/:y', userData.cal4today);
 
 app.put('/user/BMI/:username', userData.updateUserBMI);
 
@@ -58,4 +56,4 @@ app.delete('/user/:username', userData.deleteUser);
 
 app.listen(port, () => {
  	console.log('listening on port: ' + port);
- });
+});

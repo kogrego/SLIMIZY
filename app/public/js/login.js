@@ -1,6 +1,6 @@
 var loginMain = '<div class="form-container" ng-controller="loginCTRL">'+
                 '<h2>Login</h2>'+
-                '<form method="post" action="https://slimizy.herokuapp.com/loginAuth">'+
+                '<form method="post" action="http://localhost:3000/loginAuth">'+
                     '<div class="form-group">'+
                         '<label for="username">Username</label>'+
                         '<input type="text" name="username" id="username" value="" class="form-control">'+

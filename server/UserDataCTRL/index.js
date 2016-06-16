@@ -1,4 +1,4 @@
-
+'use strict';
 var userDataSchema = require('../user_schema'),
 	userLoginSchema = require('../users_schema');
 
@@ -44,7 +44,7 @@ exports.deleteUser = (req, res) => {
 	res.status(200).json({"result":"user deleted"});
 };
 
-exports.cal4today = function(req, res){
+exports.cal4today = (req, res) => {
 	var ttlCal = 'your daily calories consumption: ',
 		_username = req.params.username,
 		_today = req.params.d +'/'+ req.params.m +'/'+ req.params.y;
@@ -70,7 +70,7 @@ exports.cal4today = function(req, res){
 					'</h2>'+
 					'</body></html>');
 			});
-		}
-	})
+		};
+	});
 
 };

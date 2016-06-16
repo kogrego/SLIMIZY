@@ -1,10 +1,12 @@
+'use strict';
+
 //DB schema:
 var users = require('../users_schema'),  
     user = require('../user_schema');      
 
 //MDL function:
 
-exports.loginAuth = function (req,res){
+exports.loginAuth = (req,res) => {
     var username = req.body.username,
         password = req.body.password;
     users.findOne({username: username, password:password}, function(err, user){
@@ -19,7 +21,7 @@ exports.loginAuth = function (req,res){
         console.log('user: ' + username + ' found! ' );
         return res.redirect('/user/cal4today/'+username+'/04/06/2016');
     })  
-}
+};
 
 
 exports.register = (req, res) => {
@@ -34,7 +36,6 @@ exports.register = (req, res) => {
         // height = req.body.height,
         // BMIScore = req.body.BMIScore,
         // gender = req.body.gender;
-    var status;
     users.findOne({username: username}, (err, data) => {
         //if (err) return res.status(500).send(err);
         //if (data) return res.status(400).json({status: "user already exists"});
@@ -61,8 +62,8 @@ exports.register = (req, res) => {
             });
             newUser.save((err, doc) => {
                 //if(err) return res.status(500).send(err);
+                res.status(200).json(doc);
             });
         }
     });
-    res.status(200).json({"status": "user inserted"});
 };

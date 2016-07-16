@@ -18,10 +18,7 @@ exports.login = (req,res) => {
             path = '/login/usernotfound'
         }
         else{
-            var yesDate = new Date();
-            yesDate.setDate(yesDate.getDate() - 1);
-            var date = yesDate.toISOString().substring(0, 9);
-            path = '/user/calories/'+username+'/'+date;
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username='+username;
         }
         return res.redirect(path);
 
@@ -82,10 +79,7 @@ exports.register = (req, res) => {
                                     path = '/register/error'
                                 }
                                 else {
-                                    var yesDate = new Date();
-                                    yesDate.setDate(yesDate.getDate() - 1);
-                                    var date = yesDate.toISOString().substring(0, 10);
-                                    path = '/user/calories/'+username+'/'+date;
+                                    path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username='+username;
                                 }
                                 return res.redirect(path);
                             });

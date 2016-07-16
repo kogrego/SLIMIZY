@@ -8,7 +8,7 @@ exports.getCaloriesFromFood = (name, amount) => {
             return "ERROR";
         }
         else{
-            return data.calories * amount;
+            return parseInt(data.calories * amount);
         }
     });
 };

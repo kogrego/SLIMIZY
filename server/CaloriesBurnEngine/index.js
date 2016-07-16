@@ -19,5 +19,5 @@ exports.convertExerciseToCalories = (user, trainingRoutine, MET) => {
     else {
         BMR = (9.56 * WKG) + (1.85 * HC) - (4.68 * age) + 655;
     }
-    return (BMR / 24) * MET * T;
+    return parseInt((BMR / 24) * MET * T);
 };

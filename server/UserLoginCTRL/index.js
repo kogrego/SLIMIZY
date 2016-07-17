@@ -12,10 +12,10 @@ exports.login = (req,res) => {
         password = req.body.password;
     users.findOne({username: username, password:password}, (err, user) => {
         if (err){
-            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/login/error'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/login.html?error='+err;
         }
         else if (!user) {
-            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/login/usernotfound'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/login.html?error=userNotFound';
         }
         else{
             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username='+username;
@@ -41,10 +41,10 @@ exports.register = (req, res) => {
         path = null;
     users.findOne({username: username}, (err, data) => {
         if (err) {
-            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/error'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error='+err;
         }
         else if (data){
-            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/userexists'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error=userExists';
         }
         else{
             var newUser = new users({
@@ -53,7 +53,7 @@ exports.register = (req, res) => {
             });
             newUser.save((err, doc) => {
                 if(err){
-                    path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/error'
+                    path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error='+err;
                 }
                 else {
                     var newUser = new user({
@@ -71,7 +71,7 @@ exports.register = (req, res) => {
                     });
                     newUser.save((err, doc) => {
                         if (err) {
-                            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/error'
+                            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error='+err;
                         }
                         else {
                             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username=' + username;

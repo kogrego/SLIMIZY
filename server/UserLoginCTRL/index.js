@@ -12,10 +12,10 @@ exports.login = (req,res) => {
         password = req.body.password;
     users.findOne({username: username, password:password}, (err, user) => {
         if (err){
-            path = '/login/error'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/login/error'
         }
         else if (!user) {
-            path = '/login/usernotfound'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/login/usernotfound'
         }
         else{
             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username='+username;
@@ -41,10 +41,10 @@ exports.register = (req, res) => {
         path = null;
     users.findOne({username: username}, (err, data) => {
         if (err) {
-            path = '/register/error'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/error'
         }
         else if (data){
-            path = '/register/userexists'
+            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/userexists'
         }
         else{
             var newUser = new users({
@@ -53,7 +53,7 @@ exports.register = (req, res) => {
             });
             newUser.save((err, doc) => {
                 if(err){
-                    path = '/register/error'
+                    path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/error'
                 }
                 else {
                     var newUser = new user({
@@ -71,7 +71,7 @@ exports.register = (req, res) => {
                     });
                     newUser.save((err, doc) => {
                         if (err) {
-                            path = '/register/error'
+                            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register/error'
                         }
                         else {
                             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username=' + username;

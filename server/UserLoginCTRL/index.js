@@ -37,29 +37,32 @@ exports.register = (req, res) => {
         weight = req.body.weight,
         height = req.body.height,
         BMIScore = weight / ((height / 100) * (height / 100)),
-        gender = req.body.gender,
+        gender = req.body.gender.toLowerCase(),
         path = null;
     users.findOne({username: username}, (err, data) => {
         if (err) {
             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error='+err;
+            return res.redirect(path);
         }
         else if (data){
             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error=userExists';
+            return res.redirect(path);
         }
-        else{
+        else {
             var newUser = new users({
                 username: username,
                 password: password
             });
             newUser.save((err, doc) => {
-                if(err){
-                    path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error='+err;
+                if (err) {
+                    path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error=' + err;
+                    return res.redirect(path);
                 }
                 else {
                     var newUser = new user({
                         username: username,
                         fullName: fullName,
-                        age: 0,
+                        age: age,
                         trainingRoutine: [],
                         BMI: {
                             gender: gender,
@@ -71,7 +74,7 @@ exports.register = (req, res) => {
                     });
                     newUser.save((err, doc) => {
                         if (err) {
-                            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error='+err;
+                            path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/register.html?error=' + err;
                         }
                         else {
                             path = 'http://shenkar.html5-book.co.il/2015-2016/ws1/dev_184/index.html?username=' + username;
@@ -81,6 +84,5 @@ exports.register = (req, res) => {
                 }
             });
         }
-        return res.redirect(path);
     });
 };
